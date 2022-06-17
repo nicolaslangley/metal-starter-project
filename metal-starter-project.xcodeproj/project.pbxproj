@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2342849E2763CCC400F416F5 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2342849D2763CCC400F416F5 /* Metal.framework */; };
+		2388F0A6285CE50900E1B757 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2388F0A2285CE50900E1B757 /* Shaders.metal */; };
+		2388F0A7285CE50900E1B757 /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2388F0A5285CE50900E1B757 /* Renderer.mm */; };
 		23AB568D283C3C5900638C1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AB568C283C3C5900638C1F /* Cocoa.framework */; };
 		23AB5692283F1BC500638C1F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AB5691283F1BC500638C1F /* MetalKit.framework */; };
 		23AB56C628418B2D00638C1F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23AB56C228418B2D00638C1F /* main.mm */; };
@@ -28,6 +30,13 @@
 /* Begin PBXFileReference section */
 		234284912763CC6E00F416F5 /* metal-starter-project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "metal-starter-project"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2342849D2763CCC400F416F5 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		2388F09F285CE50900E1B757 /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		2388F0A0285CE50900E1B757 /* ConstantData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstantData.h; sourceTree = "<group>"; };
+		2388F0A1285CE50900E1B757 /* Profiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profiling.h; sourceTree = "<group>"; };
+		2388F0A2285CE50900E1B757 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		2388F0A3285CE50900E1B757 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		2388F0A4285CE50900E1B757 /* MathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathHelpers.h; sourceTree = "<group>"; };
+		2388F0A5285CE50900E1B757 /* Renderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
 		23AB568C283C3C5900638C1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		23AB5691283F1BC500638C1F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		23AB56C228418B2D00638C1F /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -68,6 +77,13 @@
 		23AB56BD28418B2D00638C1F /* src */ = {
 			isa = PBXGroup;
 			children = (
+				2388F0A0285CE50900E1B757 /* ConstantData.h */,
+				2388F0A4285CE50900E1B757 /* MathHelpers.h */,
+				2388F0A1285CE50900E1B757 /* Profiling.h */,
+				2388F0A3285CE50900E1B757 /* Renderer.h */,
+				2388F0A5285CE50900E1B757 /* Renderer.mm */,
+				2388F0A2285CE50900E1B757 /* Shaders.metal */,
+				2388F09F285CE50900E1B757 /* ShaderTypes.h */,
 				23AB56C228418B2D00638C1F /* main.mm */,
 			);
 			path = src;
@@ -139,6 +155,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2388F0A6285CE50900E1B757 /* Shaders.metal in Sources */,
+				2388F0A7285CE50900E1B757 /* Renderer.mm in Sources */,
 				23AB56C628418B2D00638C1F /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

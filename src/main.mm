@@ -2,43 +2,7 @@
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
 
-@interface MTKViewDelegate: NSObject<MTKViewDelegate>
--(nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
-@end
-
-@implementation MTKViewDelegate
-{
-  id<MTLDevice> _device;
-  id<MTLCommandQueue> _queue;
-}
-
--(nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
-{
-  self = [super init];
-  if (self)
-  {
-    _device = view.device;
-    _queue = [_device newCommandQueue];
-  }
-  return self;
-}
-
-- (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size
-{
-  
-}
-
-- (void)drawInMTKView:(nonnull MTKView *)view
-{
-  id<MTLCommandBuffer> commandBuffer = [_queue commandBuffer];
-  MTLRenderPassDescriptor* renderPassDescriptor = view.currentRenderPassDescriptor;
-  renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(1.0, 0.0, 0.0, 1.0);
-  id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-  [renderEncoder endEncoding];
-  [commandBuffer presentDrawable:view.currentDrawable];
-  [commandBuffer commit];
-}
-@end
+#include "Renderer.h"
 
 @interface NSWindowDelegate : NSObject<NSWindowDelegate>
 @end
@@ -59,7 +23,7 @@
 {
   NSWindow* _window;
   MTKView* _view;
-  MTKViewDelegate* _viewDelegate;
+  Renderer* _renderer;
   NSWindowDelegate* _windowDelegate;
 }
 
@@ -86,8 +50,8 @@
   [_view setDevice:device];
   [_view setColorPixelFormat:MTLPixelFormatBGRA8Unorm];
   [_view setDepthStencilPixelFormat:MTLPixelFormatDepth32Float_Stencil8];
-  _viewDelegate = [[MTKViewDelegate alloc] initWithMetalKitView:_view];
-  [_view setDelegate:_viewDelegate];
+  _renderer = [[Renderer alloc] initWithMetalKitView:_view];
+  [_view setDelegate:_renderer];
   
   [_window setContentView:_view];
   [_window makeFirstResponder:_view];
