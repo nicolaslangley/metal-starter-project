@@ -52,6 +52,7 @@ pub fn build(b: *std.build.Builder) void {
     exe.step.dependOn(&compile_metal_lib.step); 
 
     exe.addCSourceFile("src/main.mm", &[_][]const u8{"-fobjc-arc"});
+    exe.addCSourceFile("src/Renderer.mm", &[_][]const u8{"-fobjc-arc"});
 
     // System frameworks
     exe.linkLibCpp(); 

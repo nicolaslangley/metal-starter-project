@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2342849E2763CCC400F416F5 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2342849D2763CCC400F416F5 /* Metal.framework */; };
 		236A8EDA28BA8FF80018EE3B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 236A8ED928BA8FF80018EE3B /* Shaders.metal */; };
+		236A8EE128BB07E80018EE3B /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 236A8EE028BB07E80018EE3B /* Renderer.mm */; };
 		23AB568D283C3C5900638C1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AB568C283C3C5900638C1F /* Cocoa.framework */; };
 		23AB5692283F1BC500638C1F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AB5691283F1BC500638C1F /* MetalKit.framework */; };
 		23AB56C628418B2D00638C1F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23AB56C228418B2D00638C1F /* main.mm */; };
@@ -31,6 +32,8 @@
 		2342849D2763CCC400F416F5 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		236A8ED928BA8FF80018EE3B /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		236A8EDB28BA901E0018EE3B /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		236A8EDC28BB07E80018EE3B /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		236A8EE028BB07E80018EE3B /* Renderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
 		23AB568C283C3C5900638C1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		23AB5691283F1BC500638C1F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		23AB56C228418B2D00638C1F /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -71,6 +74,8 @@
 		23AB56BD28418B2D00638C1F /* src */ = {
 			isa = PBXGroup;
 			children = (
+				236A8EDC28BB07E80018EE3B /* Renderer.h */,
+				236A8EE028BB07E80018EE3B /* Renderer.mm */,
 				23AB56C228418B2D00638C1F /* main.mm */,
 				236A8ED928BA8FF80018EE3B /* Shaders.metal */,
 				236A8EDB28BA901E0018EE3B /* ShaderTypes.h */,
@@ -145,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				236A8EDA28BA8FF80018EE3B /* Shaders.metal in Sources */,
+				236A8EE128BB07E80018EE3B /* Renderer.mm in Sources */,
 				23AB56C628418B2D00638C1F /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

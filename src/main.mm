@@ -2,7 +2,10 @@
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
 
+#include <memory>
+
 #include "ShaderTypes.h"
+#include "Renderer.h"
 
 @interface MTKViewDelegate: NSObject<MTKViewDelegate>
 -(nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
@@ -10,10 +13,7 @@
 
 @implementation MTKViewDelegate
 {
-  id<MTLDevice> _device;
-  id<MTLCommandQueue> _queue;
-  id<MTLRenderPipelineState> _pipelineState;
-  vector_uint2 _viewportSize;
+  std::unique_ptr<Renderer> _renderer;
 }
 
 -(nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)view;
@@ -21,66 +21,19 @@
   self = [super init];
   if (self)
   {
-    _device = view.device;
-    _queue = [_device newCommandQueue];
-    id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
-
-    id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexFunction"];
-    id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"fragmentFunction"];
-
-    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
-    pipelineStateDescriptor.label = @"Simple Pipeline";
-    pipelineStateDescriptor.vertexFunction = vertexFunction;
-    pipelineStateDescriptor.fragmentFunction = fragmentFunction;
-    pipelineStateDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat;
-    pipelineStateDescriptor.depthAttachmentPixelFormat = view.depthStencilPixelFormat;
-    pipelineStateDescriptor.stencilAttachmentPixelFormat = view.depthStencilPixelFormat;
-
-    NSError *error;
-    _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor
-                                                             error:&error];
+    _renderer = std::make_unique<Renderer>(view);
   }
   return self;
 }
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size
 {
-  _viewportSize.x = size.width;
-  _viewportSize.y = size.height;
+  _renderer->UpdateViewport(size.width, size.height);
 }
 
 - (void)drawInMTKView:(nonnull MTKView *)view
 {
-  static const VertexIn triangleVertices[] =
-  {
-      // 2D positions,    RGBA colors
-      { {  250,  -250 }, { 1, 0, 0, 1 } },
-      { { -250,  -250 }, { 0, 1, 0, 1 } },
-      { {    0,   250 }, { 0, 0, 1, 1 } },
-  };
-  
-  id<MTLCommandBuffer> commandBuffer = [_queue commandBuffer];
-  MTLRenderPassDescriptor* renderPassDescriptor = view.currentRenderPassDescriptor;
-  
-  if (renderPassDescriptor != nil)
-  {
-    id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-    [renderEncoder setViewport:(MTLViewport){0.0, 0.0, static_cast<double>(_viewportSize.x), static_cast<double>(_viewportSize.y), 0.0, 1.0 }];
-    [renderEncoder setRenderPipelineState:_pipelineState];
-    [renderEncoder setVertexBytes:triangleVertices
-                           length:sizeof(triangleVertices)
-                          atIndex:InputIndexVertices];
-    [renderEncoder setVertexBytes:&_viewportSize
-                           length:sizeof(_viewportSize)
-                          atIndex:InputIndexViewportSize];
-    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle
-                      vertexStart:0
-                      vertexCount:3];
-    [renderEncoder endEncoding];
-  }
-  
-  [commandBuffer presentDrawable:view.currentDrawable];
-  [commandBuffer commit];
+  _renderer->Render(view);
 }
 @end
 
@@ -129,7 +82,6 @@
   id<MTLDevice> device = MTLCreateSystemDefaultDevice();
   [_view setDevice:device];
   [_view setColorPixelFormat:MTLPixelFormatBGRA8Unorm];
-//  [_view setDepthStencilPixelFormat:MTLPixelFormatDepth32Float_Stencil8];
   _viewDelegate = [[MTKViewDelegate alloc] initWithMetalKitView:_view];
   [_view setDelegate:_viewDelegate];
   [_viewDelegate mtkView:_view drawableSizeWillChange:_view.drawableSize];
